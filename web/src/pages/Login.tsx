@@ -7,7 +7,7 @@ import axios from "axios";
 import { Lock, Spinner } from "phosphor-react";
 
 const LoginFormSchema = z.object({
-  email: z.string(),
+  userName: z.string(),
   password: z.string(),
 });
 
@@ -28,7 +28,7 @@ export function Login() {
     try {
       setIsLoading(true);
       const res = await axios.post(
-        "http://localhost:5001/api/users/login",
+        "http://localhost:5001/api/auth/login",
         data
       );
       if (remember === true) {
@@ -77,7 +77,7 @@ export function Login() {
                 required
                 className="bg-gray-800 appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-500 placeholder-gray-400 text-gray-100 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10 sm:text-sm"
                 placeholder="Rafael Almeida"
-                {...register("email")}
+                {...register("userName")}
               />
             </div>
             <div>

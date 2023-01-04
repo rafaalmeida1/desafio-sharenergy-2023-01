@@ -1,8 +1,10 @@
-import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
-import { List, SignOut, UserCircle, X } from "phosphor-react";
+import { List, SignOut, X } from "phosphor-react";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
+
+import logoImg from "../assets/logo.png";
 
 export function Header() {
   const navigate = useNavigate();
@@ -14,13 +16,15 @@ export function Header() {
     navigate("/login");
   }
 
-  const MenuItems = ["home", "about", "services", "contact"];
+  const MenuItems = ["home", "httpCat", "randomDog", "contact"];
 
   return (
     <>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <h1 className="text-2xl text-gray-100">Sharenergy</h1>
+          <a href="/">
+            <img src={logoImg} alt="" className="w-64" />
+          </a>
 
           <Menu as="div" className="ml-3 relative">
             {({ open }) => (

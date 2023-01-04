@@ -1,11 +1,15 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Loading } from "../components/Loading";
 import { RandomUserContext } from "../context/RandomUserContext";
+import { Pagination } from "./homePageComponents/Pagination";
 import { SearchInput } from "./homePageComponents/SearchInput";
 
 export function Home() {
-  const { isLoading, randomUserData } =
-    useContext(RandomUserContext);
+  const { getRandomUserData, isLoading, randomUserData, searchUser } = useContext(RandomUserContext);
+
+  useEffect(() => {
+    getRandomUserData(1);
+  }, []);
 
   return (
     <section className="mt-5 text-gray-100">
@@ -36,27 +40,26 @@ export function Home() {
               </tr>
             </thead>
             <tbody>
-              {randomUserData.map((user) => (
-                <tr className="border-b border-gray-700">
-                  <td className="py-4 px-6">
-                    <img
-                      src={user.picture.medium}
-                      width="60px"
-                    />
-                  </td>
-                  <th
-                    scope="row"
-                    className="py-4 px-6 font-medium  whitespace-nowrap bg-gray-900  text-gray-100"
-                  >
-                    {user.name.first} {user.name.last}
-                  </th>
-                  <td className="py-4 px-6">{user.dob.age}</td>
-                  <td className="py-4 px-6 bg-gray-900">{user.email}</td>
-                  <td className="py-4 px-6">{user.login.username}</td>
-                </tr>
-              ))}
+              {searchUser(randomUserData)
+                .map((user) => (
+                  <tr className="border-b border-gray-700">
+                    <td className="py-4 px-6">
+                      <img src={user.picture.medium} width="60px" />
+                    </td>
+                    <th
+                      scope="row"
+                      className="py-4 px-6 font-medium  whitespace-nowrap bg-gray-900  text-gray-100"
+                    >
+                      {user.name.first} {user.name.last}
+                    </th>
+                    <td className="py-4 px-6">{user.dob.age}</td>
+                    <td className="py-4 px-6 bg-gray-900">{user.email}</td>
+                    <td className="py-4 px-6">{user.login.username}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
+          <Pagination />
         </div>
       )}
     </section>
