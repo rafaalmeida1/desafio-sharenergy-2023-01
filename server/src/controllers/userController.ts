@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
-import { User } from "../models/userModel";
+import { Auth } from "../models/authModel";
 import bcrypt from 'bcryptjs'
 
 export const loginController = async(req: Request,res: Response) => {
-  const selectedUser = await User.findOne({email: req.body.email});
-  if(!selectedUser) return res.status(400).send('Email or password incorrect');
+  const selectedUser = await Auth.findOne({userName: req.body.userName});
+  if(!selectedUser) return res.status(400).send('Username or password incorrect');
 
   const passwordMatch = bcrypt.compareSync(req.body.password, selectedUser.password);
-  if(!passwordMatch) return res.status(400).send('Email or password incorrect');
+  if(!passwordMatch) return res.status(400).send('Username or password incorrect');
 
   try {
-    const { email, password } = req.body;
-    const user = await User.findOne({ email, password, verified: true});
+    const { userName, password } = req.body;
+    await Auth.findOne({ userName, password, verified: true});
     res.json({
       selectedUser,
       passwordMatch
@@ -23,11 +23,11 @@ export const loginController = async(req: Request,res: Response) => {
 }
 
 export const registerController = async(req: Request, res: Response) => {
-  const selectedUser = await User.findOne({email: req.body.email});
-  if(selectedUser) return res.status(400).send('Email already exists');
+  const selectedUser = await Auth.findOne({userName: req.body.userName});
+  if(selectedUser) return res.status(400).send('Username already exists');
 
-  const user = new User({
-    email: req.body.email,
+  const user = new Auth({
+    userName: req.body.userName,
     password: bcrypt.hashSync(req.body.password),
     verified: true
   })

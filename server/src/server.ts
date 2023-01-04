@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
-import { userRouter } from './routes/userRoutes';
+import { authRouter } from './routes/authRoute';
+import { usersListRouter } from './routes/usersListRoute';
 
 dotenv.config();
 
@@ -26,9 +27,14 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.get('/', (req,res) => {
+  res.send('hello world')
+})
+
 //routes
 
-app.use('/api/users/', userRouter)
+app.use('/api/auth/', authRouter)
+app.use('/api/users-list/', usersListRouter)
 
 //listen
 
