@@ -20,6 +20,13 @@ type userDetailsProps = z.infer<typeof userDetails>;
 
 export function UniqueUser() {
   const [userData, setUserData] = useState<UserListProps>({} as UserListProps);
+  // const [userDetailsData, setUserDetailsData] = useState({
+  //   name: userData.name,
+  //   email: userData.email,
+  //   phone: userData.phone,
+  //   address: userData.address,
+  //   cpf: userData.cpf,
+  // });
   const [isLoading, setIsLoading] = useState(true);
 
   const { handleSubmit, register } = useForm<userDetailsProps>({
@@ -84,8 +91,8 @@ export function UniqueUser() {
                 className="rounded-lg border border-gray-100 bg-gray-900 text-gray-100 py-1 px-4 focus:border-gray-400"
                 type="text"
                 id="name"
-                placeholder={userData.name}
                 {...register("name")}
+                defaultValue={userData.name}
               />
               <label className="text-gray-100" htmlFor="email">
                 Email
@@ -94,8 +101,8 @@ export function UniqueUser() {
                 className="rounded-lg border border-gray-100 bg-gray-900 text-gray-100 py-1 px-4 focus:border-gray-400"
                 type="email"
                 id="email"
-                placeholder={userData.email}
                 {...register("email")}
+                defaultValue={userData.email}
               />
               <label className="text-gray-100" htmlFor="phone">
                 Telefone
@@ -104,8 +111,8 @@ export function UniqueUser() {
                 className="rounded-lg border border-gray-100 bg-gray-900 text-gray-100 py-1 px-4 focus:border-gray-400"
                 type="number"
                 id="phone"
-                placeholder={userData.phone.toString()}
                 {...register("phone", { valueAsNumber: true })}
+                defaultValue={userData.phone}
               />
               <label className="text-gray-100" htmlFor="address">
                 Endereço
@@ -114,8 +121,8 @@ export function UniqueUser() {
                 className="rounded-lg border border-gray-100 bg-gray-900 text-gray-100 py-1 px-4 focus:border-gray-400"
                 type="text"
                 id="address"
-                placeholder={userData.address}
                 {...register("address")}
+                defaultValue={userData.address}
               />
               <label className="text-gray-100" htmlFor="cpf">
                 CPF
@@ -124,8 +131,8 @@ export function UniqueUser() {
                 className="rounded-lg border border-gray-100 bg-gray-900 text-gray-100 py-1 px-4 focus:border-gray-400"
                 type="number"
                 id="cpf"
-                placeholder={userData.cpf.toString()}
                 {...register("cpf", { valueAsNumber: true })}
+                defaultValue={userData.cpf}
               />
               <button
                 type="submit"
