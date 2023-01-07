@@ -16,7 +16,7 @@ export function Header() {
     navigate("/login");
   }
 
-  const MenuItems = ["home", "httpCat", "randomDog", "contact"];
+  const MenuItems = ["home", "httpCat", "randomDog", "usersList"];
 
   return (
     <>

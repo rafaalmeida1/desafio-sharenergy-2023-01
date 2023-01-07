@@ -1,41 +1,52 @@
-import { Request, Response } from "express";
-import { Auth } from "../models/authModel";
-import bcrypt from 'bcryptjs'
+import { Request, Response, NextFunction } from "express";
+import mongoose from "mongoose";
+import { User } from "../models/userModel";
 
-export const loginController = async(req: Request,res: Response) => {
-  const selectedUser = await Auth.findOne({userName: req.body.userName});
-  if(!selectedUser) return res.status(400).send('Username or password incorrect');
-
-  const passwordMatch = bcrypt.compareSync(req.body.password, selectedUser.password);
-  if(!passwordMatch) return res.status(400).send('Username or password incorrect');
-
+export async function getAllUsers(req: Request, res: Response) {
   try {
-    const { userName, password } = req.body;
-    await Auth.findOne({ userName, password, verified: true});
-    res.json({
-      selectedUser,
-      passwordMatch
-    })
-  }
-  catch (err) {
-    console.log(err);
+    const users = await User.find({});
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ err });
   }
 }
 
-export const registerController = async(req: Request, res: Response) => {
-  const selectedUser = await Auth.findOne({userName: req.body.userName});
-  if(selectedUser) return res.status(400).send('Username already exists');
+export async function getUserById(req: Request, res: Response) {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).json({ user });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+}
 
-  const user = new Auth({
-    userName: req.body.userName,
-    password: bcrypt.hashSync(req.body.password),
-    verified: true
-  })
+export async function createUser(req: Request, res: Response) {
+  try {
+    const { name, email, phone, address, cpf, id } = req.body;
+    const user = await User.create({ name, email, phone, address, cpf, id });
+    res.setHeader('Content-Type', 'application/json');
+    res.status(201).json({ user });
+  } catch(err) {
+    res.status(500).json({err});
+  }
+}
+
+export async function updateUser(req: Request, res: Response) {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({ user });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+}
+
+export async function deleteUser(req: Request, res: Response) {
+  const id = req.body.id
 
   try {
-    const savedUser = await user.save();
-    res.status(201).send(savedUser);
-  }catch(err) {
-    res.status(400).send(err);
+    const user = await User.findByIdAndRemove(id);
+    res.status(200).json({ user });
+  } catch (err) {
+    res.status(500).json({ err });
   }
 }

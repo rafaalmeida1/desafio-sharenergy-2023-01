@@ -22,3 +22,10 @@
   background: #3294f8;
   border-radius: 999px;
 }
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '^';
+}

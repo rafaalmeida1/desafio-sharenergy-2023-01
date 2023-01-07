@@ -1,10 +1,13 @@
 import { ReactElement, ReactNode } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { RandomUserProvider } from "./context/RandomUserContext";
+import { UserListProvider } from "./context/UserListContent";
 import { DefaultLayout } from "./layouts/DefaultLayout";
 import { Home } from "./pages/Home";
 import { HttpCat } from "./pages/HttpCat";
 import { Login } from "./pages/Login";
 import { RandomDog } from "./pages/RandomDog";
+import { UsersList } from "./pages/UsersList";
 
 export function Router() {
   return (
@@ -14,7 +17,9 @@ export function Router() {
           path="/"
           element={
             <ProtectedRouter>
-              <Home />
+              <RandomUserProvider>
+                <Home />
+              </RandomUserProvider>
             </ProtectedRouter>
           }
         />
@@ -31,6 +36,17 @@ export function Router() {
           element={
             <ProtectedRouter>
               <RandomDog />
+            </ProtectedRouter>
+          }
+        />
+
+        <Route
+          path="/usersList"
+          element={
+            <ProtectedRouter>
+              <UserListProvider>
+                <UsersList />
+              </UserListProvider>
             </ProtectedRouter>
           }
         />

@@ -1,28 +1,70 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Buffer } from "buffer";
+import { statusCode } from "../utils/statusCode";
+import { Loading } from "../components/Loading";
 
 export function HttpCat() {
-  const [httpCat, setHttpCat] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [status, setStatus] = useState(100);
+  const [photo, setPhoto] = useState();
+
+  const handleSearchStatus = async (status: number) => {
+    try {
+      setIsLoading(true);
+      setStatus(status);
+      let response: any = await axios.get(
+        `http://localhost:5001/api/status/${status}`,
+        {
+          responseType: "arraybuffer",
+        }
+      );
+
+      response = Buffer.from(response.data, "binary").toString("base64");
+      setPhoto(response);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function getHTTPCat() {
-      try {
-        const response = await axios.get('http://localhost:3000/api/100');
-        setHttpCat(response.data);
-      }catch(err) {
-        console.log(err);
-      }
-    }
-
-    getHTTPCat()
-  }, [])
-
-  console.log(httpCat);
+    handleSearchStatus(status);
+  }, [status]);
 
   return (
-    <section className="mt-5 text-gray-100">
-      <div className="grid-cols-cols-4">
-        <img src={httpCat} alt="dev" />
+    <section className="mt-5 text-gray-100 w-[500px] mx-auto">
+      <div className="flex flex-col items-center">
+        <div className="w-full mb-5">
+          <select
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={(e) => setStatus(parseInt(e.target.value))}
+          >
+            {statusCode.map((status, index) =>
+              index === 0 ? (
+                <option key={status} value={status} selected>
+                  {status}
+                </option>
+              ) : (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+              )
+            )}
+          </select>
+        </div>
+
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <img
+            src={`data:image/png;base64,${photo}`}
+            alt="cat"
+            className="flex items-center justify-center w-[500px] h-[500px]"
+          />
+        )}
       </div>
     </section>
   );

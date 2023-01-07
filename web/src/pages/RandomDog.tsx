@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Loading } from "../components/Loading";
+import { api } from "../lib/api";
 
 interface RandomDogProps {
   url: string;
@@ -13,7 +13,7 @@ export function RandomDog() {
   const getRandomDog = useCallback(async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get("https://random.dog/woof.json");
+      const response = await api.get("/randomDog/getDog");
       setRandomDogs(response.data);
     } catch (err) {
       console.error(err);
@@ -21,6 +21,8 @@ export function RandomDog() {
       setIsLoading(false);
     }
   }, [randomDog]);
+
+  console.log(randomDog)
 
   useEffect(() => {
     getRandomDog();

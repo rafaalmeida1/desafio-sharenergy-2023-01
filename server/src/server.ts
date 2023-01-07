@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 
 import { authRouter } from './routes/authRoute';
 import { usersListRouter } from './routes/usersListRoute';
+import { statusCodeRouter } from './routes/statusCodeRoute';
+import { randomDogRouter } from './routes/randomDogRoute';
 
 dotenv.config();
 
@@ -35,6 +37,8 @@ app.get('/', (req,res) => {
 
 app.use('/api/auth/', authRouter)
 app.use('/api/users-list/', usersListRouter)
+app.use('/api/status/', statusCodeRouter)
+app.use('/api/randomDog/', randomDogRouter)
 
 //listen
 
