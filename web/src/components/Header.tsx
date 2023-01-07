@@ -2,7 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { List, SignOut, X } from "phosphor-react";
 import { Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import logoImg from "../assets/logo.png";
 
@@ -22,9 +22,9 @@ export function Header() {
     <>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <a href="/">
+          <Link  to="/">
             <img src={logoImg} alt="" className="w-64" />
-          </a>
+          </Link>
 
           <Menu as="div" className="ml-3 relative">
             {({ open }) => (
@@ -62,25 +62,25 @@ export function Header() {
                       {MenuItems.map((item, index) => (
                         <Menu.Item key={item}>
                           {index === 0 ? (
-                            <a
-                              href="/"
+                            <Link 
+                              to="/"
                               className={classNames("p-2 hover:text-white", {
                                 "text-gray-400": path !== `/`,
                                 "text-white": path === `/`,
                               })}
                             >
                               <p className="capitalize">{item}</p>
-                            </a>
+                            </Link>
                           ) : (
-                            <a
-                              href={`/${item}`}
+                            <Link 
+                              to={`/${item}`}
                               className={classNames("p-2 hover:text-white", {
                                 "text-gray-400": path !== `/${item}`,
                                 "text-white": path === `/${item}`,
                               })}
                             >
                               <p className="capitalize">{item}</p>
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                       ))}

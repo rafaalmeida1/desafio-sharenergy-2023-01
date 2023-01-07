@@ -15,7 +15,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #1c2f41
+  background: #1c2f41;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -23,9 +23,17 @@
   border-radius: 999px;
 }
 
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
-  text-overflow: '^';
+  text-overflow: "^";
 }

@@ -22,8 +22,6 @@ export function RandomDog() {
     }
   }, [randomDog]);
 
-  console.log(randomDog)
-
   useEffect(() => {
     getRandomDog();
   }, []);

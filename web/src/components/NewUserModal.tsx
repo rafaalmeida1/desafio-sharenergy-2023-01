@@ -5,7 +5,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 import { UserListContext } from "../context/UserListContent";
-import { v4 } from 'uuid'
+import { v4 } from "uuid";
 
 const newUserFormSchema = z.object({
   name: z.string(),
@@ -18,7 +18,7 @@ const newUserFormSchema = z.object({
 type newUserFormInputs = z.infer<typeof newUserFormSchema>;
 
 export function NewUserModal() {
-  const { createUser } = useContext(UserListContext);
+  const { createUser, closeModal } = useContext(UserListContext);
 
   const { register, handleSubmit, reset } = useForm<newUserFormInputs>({
     resolver: zodResolver(newUserFormSchema),
@@ -36,6 +36,8 @@ export function NewUserModal() {
       cpf,
     });
 
+    closeModal(false);
+
     reset();
   }
 
@@ -43,7 +45,10 @@ export function NewUserModal() {
     <Dialog.Portal>
       <Dialog.Overlay className="fixed w-screen h-screen inset-0 bg-black bg-opacity-75" />
 
-      <Dialog.Content className="min-w-[32rem] rounded-lg py-10 px-12 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <Dialog.Content
+        id="modal-content"
+        className="min-w-[32rem] rounded-lg py-10 px-12 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
         <div className="relative px-5 xs:px-0">
           <Dialog.Close className="absolute bg-transparent border-0 top-4 right-14 xs:right-8 leading-[0] cursor-pointer text-gray-100">
             <X size={24} />
@@ -105,7 +110,7 @@ export function NewUserModal() {
 
             <button
               type="submit"
-              className="h-14 border-0 bg-green-500 text-gray-100 font-bold px-0 rounded-lg mt-6 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              className="h-14 border-0 bg-green-500 hover:bg-opacity-60 transition-all duration-150 text-gray-100 font-bold px-0 rounded-lg mt-6 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
               Cadastrar
             </button>

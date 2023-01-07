@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import mongoose from "mongoose";
 import { User } from "../models/userModel";
 
 export async function getAllUsers(req: Request, res: Response) {
@@ -41,7 +40,11 @@ export async function updateUser(req: Request, res: Response) {
 }
 
 export async function deleteUser(req: Request, res: Response) {
-  const id = req.body.id
+  let id = req.params.id
+
+  if(!id) {
+    id = req.body.id;
+  }
 
   try {
     const user = await User.findByIdAndRemove(id);

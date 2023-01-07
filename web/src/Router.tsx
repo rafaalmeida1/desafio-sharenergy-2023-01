@@ -7,6 +7,7 @@ import { Home } from "./pages/Home";
 import { HttpCat } from "./pages/HttpCat";
 import { Login } from "./pages/Login";
 import { RandomDog } from "./pages/RandomDog";
+import { UniqueUser } from "./pages/uniqueUser";
 import { UsersList } from "./pages/UsersList";
 
 export function Router() {
@@ -47,6 +48,15 @@ export function Router() {
               <UserListProvider>
                 <UsersList />
               </UserListProvider>
+            </ProtectedRouter>
+          }
+        />
+
+        <Route
+          path="/usersList/:id"
+          element={
+            <ProtectedRouter>
+              <UniqueUser />
             </ProtectedRouter>
           }
         />

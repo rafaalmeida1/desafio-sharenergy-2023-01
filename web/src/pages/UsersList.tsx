@@ -4,9 +4,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { NewUserModal } from "../components/NewUserModal";
 import { UserListContext } from "../context/UserListContent";
 import { Pencil, Trash } from "phosphor-react";
+import { Link } from "react-router-dom";
 
 export function UsersList() {
-  const { getAllUsers, deleteUser, users, isLoading } = useContext(UserListContext);
+  const { getAllUsers, deleteUser, closeModal, open, users, isLoading } =
+    useContext(UserListContext);
 
   useEffect(() => {
     getAllUsers();
@@ -14,7 +16,7 @@ export function UsersList() {
 
   return (
     <section className="mt-5 text-gray-100 flex flex-col items-center justify-center w-full pb-10">
-      <Dialog.Root>
+      <Dialog.Root open={open} onOpenChange={closeModal}>
         <Dialog.Trigger asChild>
           <button className="mb-5 ml-auto h-12 border-0 bg-slate-600 hover:bg-slate-700 transition-colors duration-150 text-gray-100 font-bold rounded-lg px-5 cursor-pointer">
             Novo Usuário
@@ -54,8 +56,8 @@ export function UsersList() {
               {users.length > 0 ? (
                 users.map((user) => (
                   <tr
-                    className="border-b border-gray-700 bg-gray-900 hover:bg-opacity-30 transition-all duration-150 cursor-pointer"
-                    key={user.id}
+                    className="border-b border-gray-700 bg-gray-900 hover:bg-opacity-30 transition-all duration-150"
+                    key={user._id}
                   >
                     <td className="py-4 px-6">{user.name}</td>
                     <td className="py-4 px-6 font-medium  whitespace-nowrap ">
@@ -65,12 +67,17 @@ export function UsersList() {
                     <td className="py-4 px-6">{user.address}</td>
                     <td className="py-4 px-6">{user.cpf}</td>
                     <td className="flex justify-center items-center">
-                      <button className="w-full text-red-500 flex items-center justify-center py-4 px-2 bg-transparente hover:bg-gray-800" onClick={() => deleteUser(user.id)}>
+                      <button
+                        className="w-full text-red-500 flex items-center justify-center py-4 px-2 bg-transparente hover:bg-gray-800"
+                        onClick={() => deleteUser(user._id)}
+                      >
                         <Trash size={20} />
                       </button>
-                      <button className="w-full text-blue-500 flex items-center justify-center py-4 px-2 bg-transparente hover:bg-gray-800">
-                        <Pencil size={20} />
-                      </button>
+                      <Link to={`/usersList/${user._id}`} className="w-full">
+                        <button className="w-full text-blue-500 flex items-center justify-center py-4 px-2 bg-transparente hover:bg-gray-800">
+                          <Pencil size={20} />
+                        </button>
+                      </Link>
                     </td>
                   </tr>
                 ))

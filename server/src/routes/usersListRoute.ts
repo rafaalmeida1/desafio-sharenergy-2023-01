@@ -11,3 +11,4 @@ usersListRouter.post('/createUser', express.urlencoded({extended:true}), createU
 usersListRouter.put('/updateUser/:id', express.urlencoded({extended:true}), updateUser);
 
 usersListRouter.post('/deleteUser', express.urlencoded({extended:true}), deleteUser);
+usersListRouter.delete('/deleteUser/:id', express.urlencoded({extended:true}), deleteUser);

@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useCallback, useState } from "react";
 import { api } from "../lib/api";
 
-interface UserListProps {
-  id: string;
+export interface UserListProps {
+  _id: string;
   name: string;
   email: string;
   phone: number;
@@ -24,6 +24,8 @@ interface UserListValues {
   createUser: (data: newUserProps) => Promise<void>;
   deleteUser: (id: string) => Promise<void>;
   isLoading: boolean;
+  open: boolean;
+  closeModal: (state: boolean) => void;
   users: UserListProps[];
 }
 
@@ -36,6 +38,12 @@ interface UserListProviderProps {
 export function UserListProvider({ children }: UserListProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<UserListProps[]>([]);
+
+  const [open, setOpen] = useState(false);
+  function closeModal(state: boolean){
+    setOpen(state)
+  }
+
 
   const getAllUsers = useCallback(async () => {
     try {
@@ -66,7 +74,7 @@ export function UserListProvider({ children }: UserListProviderProps) {
 
   const deleteUser = useCallback(async (id: string) => {
     await api.post('/users-list/deleteUser', {
-      id: id
+      id
     })
 
     getAllUsers();
@@ -74,7 +82,7 @@ export function UserListProvider({ children }: UserListProviderProps) {
 
   return (
     <UserListContext.Provider
-      value={{ isLoading, users, getAllUsers, createUser, deleteUser }}
+      value={{ isLoading, users, open, closeModal, getAllUsers, createUser, deleteUser }}
     >
       {children}
     </UserListContext.Provider>
