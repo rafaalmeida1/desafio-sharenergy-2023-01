@@ -5,12 +5,8 @@ import { Pagination } from "./homePageComponents/Pagination";
 import { SearchInput } from "./homePageComponents/SearchInput";
 
 export function Home() {
-  const { getRandomUserData, isLoading, randomUserData, searchUser } =
+  const { isLoading, randomUserData, searchUser } =
     useContext(RandomUserContext);
-
-  useEffect(() => {
-    getRandomUserData(1);
-  }, []);
 
   return (
     <section className="mt-5 text-gray-100">
@@ -41,7 +37,7 @@ export function Home() {
               </tr>
             </thead>
             <tbody>
-              {searchUser(randomUserData).map((user) => (
+              {randomUserData.map((user) => (
                 <tr className="border-b border-gray-700 bg-gray-900 hover:bg-opacity-30 transition-all duration-150">
                   <td className="py-4 px-6">
                     <img src={user.picture.medium} width="60px" />

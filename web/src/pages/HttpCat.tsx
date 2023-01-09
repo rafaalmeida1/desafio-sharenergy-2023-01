@@ -4,10 +4,12 @@ import { Buffer } from "buffer";
 import { statusCode } from "../utils/statusCode";
 import { Loading } from "../components/Loading";
 
+import notFoundImg from "../assets/notFound.jpg";
+
 export function HttpCat() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [status, setStatus] = useState(100);
+  const [status, setStatus] = useState(404);
   const [photo, setPhoto] = useState();
 
   const handleSearchStatus = async (status: number) => {
@@ -25,6 +27,7 @@ export function HttpCat() {
       setPhoto(response);
     } catch (err) {
       console.log(err);
+      setStatus(404);
     } finally {
       setIsLoading(false);
     }
@@ -32,30 +35,31 @@ export function HttpCat() {
 
   useEffect(() => {
     handleSearchStatus(status);
-  }, [status]);
+  }, []);
+
+  console.log(photo);
 
   return (
-    <section className="mt-5 text-gray-100 w-[500px] mx-auto">
-      <div className="flex flex-col items-center">
-        <div className="w-full mb-5">
-          <select
-            className="bg-gray-50 border border-gray-300 hover:border-gray-500 text-gray-900 text-sm rounded-lg focus:ring-[#1c2f41] focus:border-[#1c2f41] block w-full p-2.5 transition-all duration-150 cursor-pointer"
+    <section className="mt-5 h-[570px] mx-auto flex gap-2 text-gray-100 justify-center">
+      <ul className="bg-gray-900 overflow-y-auto h-full flex flex-col gap-2">
+        {statusCode.map((item) => (
+          <li className="first:pt-4 pl-4 pr-6 text-gray-100 bg-transparent hover:bg-gray-800 cursor-pointer" onClick={(e) => setStatus(item)}>{item}</li>
+        ))}
+      </ul>
+
+      <div className="flex flex-col items-center w-full md:w-[500px]">
+        <div className="flex items-center gap-2 mb-5 w-full">
+          <input
+            type="number"
+            placeholder="Status Code"
+            className="flex-1 py-3 px-4 rounded-lg bg-blue-900 border border-gray-500 text-gray-100 placeholder:text-gray-400 transition-colors duration-100 focus:border-blue-800 focus:outline-none"
             onChange={(e) => setStatus(parseInt(e.target.value))}
-          >
-            {statusCode.map((status, index) =>
-              index === 0 ? (
-                <option key={status} value={status} selected>
-                  {status}
-                </option>
-              ) : (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-              )
-            )}
-          </select>
+            value={status}
+          />
+          <button className="h-full border-0 bg-green-500 hover:bg-opacity-60 transition-all duration-150 text-gray-100 font-bold px-2 rounded-lg cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed" onClick={() => handleSearchStatus(status)}>Veja um gatinho</button>
         </div>
 
+        <div className="flex gap-2">
         {isLoading ? (
           <Loading />
         ) : (
@@ -65,6 +69,7 @@ export function HttpCat() {
             className="flex items-center justify-center w-[500px] h-[500px]"
           />
         )}
+        </div>
       </div>
     </section>
   );

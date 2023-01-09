@@ -19,12 +19,12 @@ interface RandomUserDataProps {
 }
 
 interface RandomUserContextType {
-  getRandomUserData: (page: number) => Promise<void>;
   randomUserData: RandomUserDataProps[];
   isLoading: boolean;
-  query: string;
-  setSearchQuery: (value: string) => void;
-  searchUser: (data: RandomUserDataProps[]) => RandomUserDataProps[];
+  page: number;
+  searchUser: () => void;
+  nextPage: () => void;
+  previousPage: () => void;
 }
 
 interface RandomUserProviderProps {
@@ -35,50 +35,74 @@ export const RandomUserContext = createContext({} as RandomUserContextType);
 
 export function RandomUserProvider({ children }: RandomUserProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
   const [randomUserData, setRandomUserData] = useState<RandomUserDataProps[]>(
     []
   );
-  const [query, setQuery] = useState("");
 
-  const setSearchQuery = (value: string) => {
-    setQuery(value);
+  const nextPage = () => {
+    setPage(page + 1);
   };
 
-  async function getRandomUserData(page: number) {
-    const pagination = page <= 1 ? 1 : page;
+  const previousPage = () => {
+    if (page !== 1) {
+      setPage(page - 1);
+    }
+  };
 
+  useEffect(() => {
+    async function getRandomUserData() {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(
+          `https://randomuser.me/api/?page=${page}&results=5&seed=abc`
+        );
+        setRandomUserData(response.data.results);
+        setIsLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    getRandomUserData();
+  }, [page]);
+
+  const searchUser = async () => {
+    const input = document.querySelector("input");
     try {
       setIsLoading(true);
-      const response = await axios.get(`https://randomuser.me/api/`, {
-        params: {
-          results: 5,
-          page: pagination
-        },
-      });
-      setRandomUserData(response.data.results);
-    } finally {
+      const response = await axios.get(
+        `https://randomuser.me/api/?page=1&results=2500&seed=abc`
+      );
+      const filteredUser = response.data.results.filter(
+        (user: RandomUserDataProps) => {
+          const userData = [
+            user.email,
+            user.name.first,
+            user.name.last,
+            user.login.username,
+          ];
+          if (userData.includes(input!.value)) {
+            return user
+          }
+          
+        }
+      );
       setIsLoading(false);
+      setRandomUserData(filteredUser);
+    } catch(err) {
+      alert('você pesquisou de mais')
     }
-  }
-
-  const searchUser = (data: RandomUserDataProps[]) => {
-    return data.filter((data: any) =>
-      data?.name.first.toLowerCase().includes(query) ||
-      data?.name.last.toLowerCase().includes(query) ||
-      data?.email.toLowerCase().includes(query) ||
-      data?.login.username.toLowerCase().includes(query) 
-    );
   };
 
   return (
     <RandomUserContext.Provider
       value={{
-        getRandomUserData,
         randomUserData,
         isLoading,
+        page,
         searchUser,
-        query,
-        setSearchQuery,
+        nextPage,
+        previousPage,
       }}
     >
       {children}
