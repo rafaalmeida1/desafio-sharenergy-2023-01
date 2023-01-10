@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -32,21 +32,21 @@ export function Login() {
         data
       );
       if (remember === true) {
-        localStorage.setItem("auth", JSON.stringify(res.data));
+        localStorage.setItem("@shareenery-challenge:1.0.0-auth", JSON.stringify(res.data));
       } else {
-        sessionStorage.setItem("auth", JSON.stringify(res.data));
+        sessionStorage.setItem("@shareenery-challenge:1.0.0-auth", JSON.stringify(res.data));
       }
 
-      if (res.data.user !== null) {
+      if (res.data.user !== null || res.data.password !== null) {
         navigate("/");
       } else {
-        localStorage.removeItem("auth");
-        sessionStorage.removeItem("auth");
+        localStorage.removeItem("@shareenery-challenge:1.0.0-auth");
+        sessionStorage.removeItem("@shareenery-challenge:1.0.0-auth");
         navigate("/login");
         setErrorInput(true);
       }
     } catch (err) {
-      console.log(err);
+      setIsLoading(false);
       setErrorInput(true);
     } finally {
       setIsLoading(false);

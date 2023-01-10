@@ -30,10 +30,10 @@ export function RandomDog() {
 
   return (
     <section className="mt-5 text-gray-100 flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center mt-5 w-96">
+      <div className="flex flex-col items-center justify-center mt-5 w-72 sm:w-96">
         <button
           onClick={() => getRandomDog()}
-          className="flex items-center justify-center w-full h-10 rounded-lg bg-green-500 hover:bg-green-400 transition-all duration-100"
+          className="flex items-center justify-center w-full h-10 rounded-lg border border-green-500 bg-green-500 hover:bg-transparent transition-all duration-100"
         >
           Veja mais um Dog
         </button>
@@ -41,7 +41,7 @@ export function RandomDog() {
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="w-96 h-96 overflow-hidden mt-5">
+          <div className="w-72 sm:w-96 h-96 overflow-hidden mt-5">
             {randomDogMp4 ? (
               <video autoPlay loop className="w-full h-full scale-100 hover:scale-110 transition-transform duration-100">
                 <source src={randomDog.url} type="video/mp4" />

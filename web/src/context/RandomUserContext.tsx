@@ -71,17 +71,17 @@ export function RandomUserProvider({ children }: RandomUserProviderProps) {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `https://randomuser.me/api/?page=1&results=2500&seed=abc`
+        `https://randomuser.me/api/?page=${page}&results=2500&seed=abc`
       );
       const filteredUser = response.data.results.filter(
         (user: RandomUserDataProps) => {
           const userData = [
-            user.email,
-            user.name.first,
-            user.name.last,
-            user.login.username,
+            user.email.toLowerCase(),
+            user.name.first.toLowerCase(),
+            user.name.last.toLowerCase(),
+            user.login.username.toLowerCase(),
           ];
-          if (userData.includes(input!.value)) {
+          if (userData.includes(input!.value.toLowerCase())) {
             return user
           }
           

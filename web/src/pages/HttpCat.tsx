@@ -4,8 +4,6 @@ import { Buffer } from "buffer";
 import { statusCode } from "../utils/statusCode";
 import { Loading } from "../components/Loading";
 
-import notFoundImg from "../assets/notFound.jpg";
-
 export function HttpCat() {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +38,7 @@ export function HttpCat() {
   console.log(photo);
 
   return (
-    <section className="mt-5 h-[570px] mx-auto flex gap-2 text-gray-100 justify-center">
+    <section className="mt-5 h-[490px] sm:h-[570px] mx-auto flex gap-2 text-gray-100 justify-center">
       <ul className="bg-gray-900 overflow-y-auto h-full flex flex-col gap-2">
         {statusCode.map((item) => (
           <li className="first:pt-4 pl-4 pr-6 text-gray-100 bg-transparent hover:bg-gray-800 cursor-pointer" onClick={(e) => setStatus(item)}>{item}</li>
@@ -56,7 +54,7 @@ export function HttpCat() {
             onChange={(e) => setStatus(parseInt(e.target.value))}
             value={status}
           />
-          <button className="h-full border-0 bg-green-500 hover:bg-opacity-60 transition-all duration-150 text-gray-100 font-bold px-2 rounded-lg cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed" onClick={() => handleSearchStatus(status)}>Veja um gatinho</button>
+          <button className="text-sm sm:text-lg h-full border border-green-500 bg-green-500 hover:bg-transparent transition-all duration-150 text-gray-100 font-bold px-2 rounded-lg cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed" onClick={() => handleSearchStatus(status)}>Veja um gatinho</button>
         </div>
 
         <div className="flex gap-2">
@@ -66,7 +64,7 @@ export function HttpCat() {
           <img
             src={`data:image/png;base64,${photo}`}
             alt="cat"
-            className="flex items-center justify-center w-[500px] h-[500px]"
+            className="flex items-center justify-center w-[400px] h-[400px] sm:w-[500px] sm:h-[500px]"
           />
         )}
         </div>

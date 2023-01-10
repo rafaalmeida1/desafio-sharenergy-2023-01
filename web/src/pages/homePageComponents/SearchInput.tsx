@@ -30,7 +30,7 @@ export function SearchInput() {
         {...register("query")}
         className="flex-1 py-3 px-4 rounded-lg bg-blue-900 border border-gray-500 text-gray-100 placeholder:text-gray-400 transition-olors duration-100 focus:border-blue-800 focus:outline-none"
       />
-      <button className="border-0 bg-green-500 hover:bg-opacity-60 transition-all duration-150 text-gray-100 font-bold py-3 px-4 rounded-lg cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+      <button className="border border-green-500 bg-green-500 bg-opacity-75 hover:bg-transparent text-gray-100 transition-all duration-150 font-bold py-3 px-4 rounded-lg cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
         Procurar
       </button>
     </form>

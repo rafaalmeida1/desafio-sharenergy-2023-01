@@ -1,13 +1,13 @@
 import { ReactElement, ReactNode } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { RandomUserProvider } from "./context/RandomUserContext";
-import { UserListProvider } from "./context/UserListContent";
+import { UserListProvider } from "./context/UserListContext";
 import { DefaultLayout } from "./layouts/DefaultLayout";
 import { Home } from "./pages/Home";
 import { HttpCat } from "./pages/HttpCat";
 import { Login } from "./pages/Login";
 import { RandomDog } from "./pages/RandomDog";
-import { UniqueUser } from "./pages/uniqueUser";
+import { UniqueUser } from "./pages/UniqueUser";
 import { UsersList } from "./pages/UsersList";
 
 export function Router() {
@@ -74,7 +74,7 @@ interface ProtectedRouterProps {
 export function ProtectedRouter({
   children,
 }: ProtectedRouterProps): ReactElement | any {
-  if (localStorage.getItem("auth") || sessionStorage.getItem("auth")) {
+  if (localStorage.getItem("@shareenery-challenge:1.0.0-auth") || sessionStorage.getItem("@shareenery-challenge:1.0.0-auth")) {
     return children;
   } else {
     return <Navigate to="/login" />;

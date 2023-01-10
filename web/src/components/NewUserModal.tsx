@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
-import { UserListContext } from "../context/UserListContent";
+import { UserListContext } from "../context/UserListContext";
 import { v4 } from "uuid";
 
 const newUserFormSchema = z.object({
@@ -110,7 +110,7 @@ export function NewUserModal() {
 
             <button
               type="submit"
-              className="h-14 border-0 bg-green-500 hover:bg-opacity-60 transition-all duration-150 text-gray-100 font-bold px-0 rounded-lg mt-6 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              className="h-14 border border-green-500 bg-green-500 hover:bg-transparent transition-all duration-150 text-gray-100 font-bold px-0 rounded-lg mt-6 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
               Cadastrar
             </button>

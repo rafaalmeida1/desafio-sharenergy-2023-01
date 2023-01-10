@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Auth } from "../models/authModel";
 import bcrypt from 'bcryptjs'
 
-export const loginController = async(req: Request,res: Response) => {
+export const loginController = async(req: Request,res: Response, next: NextFunction) => {
   const selectedUser = await Auth.findOne({userName: req.body.userName});
   if(!selectedUser) return res.status(400).send('Username or password incorrect');
 
@@ -18,7 +18,8 @@ export const loginController = async(req: Request,res: Response) => {
     })
   }
   catch (err) {
-    console.log(err);
+    res.status(400).send('Login não encontrado');
+    next();
   }
 }
 

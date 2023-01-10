@@ -12,7 +12,7 @@ export function Header() {
             <img src={logoImg} alt="" className="w-64" />
           </Link>
 
-          <div className="flex gap-2">
+          <div className="flex items-center justify-center gap-2">
             <MenuItems />
             <LogoutButton />
           </div>

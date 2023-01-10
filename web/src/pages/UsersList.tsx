@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { Loading } from "../components/Loading";
 import * as Dialog from "@radix-ui/react-dialog";
 import { NewUserModal } from "../components/NewUserModal";
-import { UserListContext } from "../context/UserListContent";
+import { UserListContext } from "../context/UserListContext";
 import { Pencil, Trash } from "phosphor-react";
 import { Link } from "react-router-dom";
 
@@ -29,32 +29,32 @@ export function UsersList() {
         <Loading />
       ) : (
         <div className="w-full overflow-x-auto overflow-y-auto relative shadow-md shadow-slate-800 rounded-lg">
-          <table className="w-full text-sm text-left text-gray-100 ">
-            <thead className="text-xs uppercase ">
-              <tr className="border-b border-gray-700 bg-gray-800">
-                <th scope="col" className="py-3 px-6">
-                  Nome
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Email
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Telefone
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Endereço
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  CPF
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Opções
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.length > 0 ? (
-                users.map((user) => (
+          {users.length > 0 ? (
+            <table className="w-full text-sm text-left text-gray-100 ">
+              <thead className="text-xs uppercase ">
+                <tr className="border-b border-gray-700 bg-gray-800">
+                  <th scope="col" className="py-3 px-6">
+                    Nome
+                  </th>
+                  <th scope="col" className="py-3 px-6">
+                    Email
+                  </th>
+                  <th scope="col" className="py-3 px-6">
+                    Telefone
+                  </th>
+                  <th scope="col" className="py-3 px-6">
+                    Endereço
+                  </th>
+                  <th scope="col" className="py-3 px-6">
+                    CPF
+                  </th>
+                  <th scope="col" className="py-3 px-6">
+                    Opções
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) => (
                   <tr
                     className="border-b border-gray-700 bg-gray-900 hover:bg-opacity-30 transition-all duration-150"
                     key={user._id}
@@ -80,12 +80,15 @@ export function UsersList() {
                       </Link>
                     </td>
                   </tr>
-                ))
-              ) : (
-                <p>Não tem nada aqui</p>
-              )}
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="w-full flex flex-col items-center justify-center text-center">
+              <span className="text-lg text-gray-300">Não tem nenhum usuário cadastrado!!</span>
+              <p className="text-base text-gray-500">Cadastre um no botão de <strong className="font-bold text-white">Novo Usuário</strong> localizado acima</p>
+            </div>
+          )}
         </div>
       )}
     </section>

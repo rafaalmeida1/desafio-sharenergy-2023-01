@@ -2,7 +2,7 @@ import { CaretLeft } from "phosphor-react";
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../components/Loading";
-import { UserListProps } from "../context/UserListContent";
+import { UserListProps } from "../context/UserListContext";
 import { api } from "../lib/api";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -20,13 +20,6 @@ type userDetailsProps = z.infer<typeof userDetails>;
 
 export function UniqueUser() {
   const [userData, setUserData] = useState<UserListProps>({} as UserListProps);
-  // const [userDetailsData, setUserDetailsData] = useState({
-  //   name: userData.name,
-  //   email: userData.email,
-  //   phone: userData.phone,
-  //   address: userData.address,
-  //   cpf: userData.cpf,
-  // });
   const [isLoading, setIsLoading] = useState(true);
 
   const { handleSubmit, register } = useForm<userDetailsProps>({
@@ -73,7 +66,7 @@ export function UniqueUser() {
   }, []);
 
   return (
-    <section className="w-[750px] mx-auto">
+    <section className="w-full sm:w-[750px] mx-auto">
       <Link to={"/usersList"} className="flex items-center text-gray-100">
         <CaretLeft size={24} />
         <h3>Volta</h3>
@@ -136,7 +129,7 @@ export function UniqueUser() {
               />
               <button
                 type="submit"
-                className="h-14 border-0 bg-green-500 hover:bg-opacity-60 transition-all duration-150 text-gray-100 font-bold px-0 rounded-lg mt-6 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                className="h-14 border border-green-500 bg-green-500 hover:bg-transparent transition-all duration-150 text-gray-100 font-bold px-0 rounded-lg mt-6 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 Enviar alterações
               </button>

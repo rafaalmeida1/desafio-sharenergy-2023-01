@@ -9,13 +9,13 @@ export function Home() {
     useContext(RandomUserContext);
 
   return (
-    <section className="mt-5 text-gray-100">
+    <section className="mt-5 pb-5 text-gray-100 ">
       <SearchInput />
 
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="overflow-x-auto relative shadow-md shadow-slate-800 rounded-lg">
+        <div className="overflow-x-auto mb-4 relative shadow-md shadow-slate-800 rounded-lg">
           <table className="w-full text-sm text-left text-gray-100 ">
             <thead className="text-xs text-gray-100 uppercase ">
               <tr className="border-b border-gray-700 bg-gray-800">
@@ -56,9 +56,9 @@ export function Home() {
               ))}
             </tbody>
           </table>
-          <Pagination />
         </div>
       )}
+      <Pagination />
     </section>
   );
 }
