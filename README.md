@@ -56,7 +56,7 @@ npm install
 yarn
 ```
 
-#### Para iniciar o backend de fato:
+#### Para iniciar o front-end de fato:
 ```bash
 npm run server
 # or
