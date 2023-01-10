@@ -3,6 +3,10 @@
 ## Projeto realizado por Rafael Almeida 
 <img src="https://github.com/rafaalmeida1.png" alt="" width="200px" height="200px" />
 
+# Video de apresentação
+<a href="https://www.youtube.com/watch?v=Jeup7TKS0Ds&ab_channel=RafaelAlmeida">Link do Vídeo</a>
+<hr/>
+
 ### Ferramentas utilizadas no Back-End
 
 - NodeJs
@@ -42,7 +46,7 @@ npm run server
 # or
 yarn server
 ```
-
+<hr/>
 
 ### Para Configurar o Front-end
 
@@ -59,6 +63,6 @@ npm run server
 yarn server
 ```
 
-
+<hr/>
 
 # Um Abraço, e espero que até breve!
